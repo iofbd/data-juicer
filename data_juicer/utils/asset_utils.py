@@ -1,10 +1,9 @@
 import json
 import os
-
-import requests
 from loguru import logger
 
 from .cache_utils import DATA_JUICER_ASSETS_CACHE
+from security import safe_requests
 
 # Default directory to store auxiliary resources
 ASSET_DIR = DATA_JUICER_ASSETS_CACHE
@@ -48,7 +47,7 @@ def load_words_asset(words_dir: str, words_type: str):
         logger.info(f'Specified {words_dir} does not contain '
                     f'any {words_type} files in json format, now '
                     'download the one cached by data_juicer team')
-        response = requests.get(ASSET_LINKS[words_type])
+        response = safe_requests.get(ASSET_LINKS[words_type])
         words_dict = response.json()
         # cache the asset file locally
         cache_path = os.path.join(words_dir, f'{words_type}.json')
