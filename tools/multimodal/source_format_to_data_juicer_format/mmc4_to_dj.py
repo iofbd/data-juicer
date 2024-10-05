@@ -77,7 +77,6 @@
 # https://github.com/allenai/mmc4#documents
 
 import os
-import random
 from copy import deepcopy
 
 import fire
@@ -86,6 +85,7 @@ from loguru import logger
 from tqdm import tqdm
 
 from data_juicer.utils.mm_utils import SpecialTokens
+import secrets
 
 
 @logger.catch
@@ -219,7 +219,7 @@ def main(
                         elif image_special_token_insert_pos == 'after':
                             sent += sent_seperator + image_special_token
                         else:
-                            if random.random() < 0.5:
+                            if secrets.SystemRandom().random() < 0.5:
                                 # before
                                 sent = image_special_token + sent_seperator \
                                        + sent
