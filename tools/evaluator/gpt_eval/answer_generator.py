@@ -180,7 +180,7 @@ class MegatronGenerator(AbstractGenerator):
                                             'tokens_to_generate': max_tokens,
                                             'temperature': temperature,
                                             'echo_prompts': False
-                                        })).json()
+                                        }), timeout=60).json()
             except Exception as e:
                 response = {'message': e}
             if 'text' not in response:
