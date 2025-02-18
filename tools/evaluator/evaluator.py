@@ -209,7 +209,7 @@ class Evaluator():
         with open(
                 os.path.join(self.megatron_checkpoint_path,
                              'latest_checkpointed_iteration.txt'), 'r') as f:
-            latest_checkpoint_iter = int(f.readline())
+            latest_checkpoint_iter = int(f.readline(5_000_000))
         if iteration > latest_checkpoint_iter:
             return False
         checkpoint_path = os.path.join(self.megatron_checkpoint_path,
