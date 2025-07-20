@@ -58,7 +58,6 @@
 
 import json
 import os
-import random
 
 import fire
 import jsonlines as jl
@@ -66,6 +65,7 @@ from loguru import logger
 from tqdm import tqdm
 
 from data_juicer.utils.mm_utils import SpecialTokens
+import secrets
 
 
 @logger.catch
@@ -228,7 +228,7 @@ def main(
                         elif image_broadcast_pos == 'after':
                             sent_human += sent_seperator + image_special_token
                         elif image_broadcast_pos == 'random':
-                            if random.random() < 0.5:
+                            if secrets.SystemRandom().random() < 0.5:
                                 # before
                                 sent_human = image_special_token \
                                              + sent_seperator + sent_human
