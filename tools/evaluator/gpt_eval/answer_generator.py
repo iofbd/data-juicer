@@ -11,6 +11,7 @@ import requests
 import yaml
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from security import safe_command
 
 
 def parse_args():
@@ -164,7 +165,7 @@ class MegatronGenerator(AbstractGenerator):
         ]
         self._set_megatron_tokenizer(args)
         os.chdir(self.megatron_home)
-        process = subprocess.Popen(args,
+        process = safe_command.run(subprocess.Popen, args,
                                    stdout=subprocess.DEVNULL,
                                    stderr=subprocess.DEVNULL)
         os.chdir(self.cur_dir)

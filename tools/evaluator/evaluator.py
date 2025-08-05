@@ -7,6 +7,7 @@ import time
 import yaml
 from gpt_eval.gpt_evaluator import GPTEvaluator
 from recorder.wandb_writer import HelmWriter
+from security import safe_command
 
 
 def parse_args():
@@ -171,7 +172,7 @@ class Evaluator():
         self._set_megatron_tokenizer(args)
         logfile = open(self.megatron_log_path, 'w')
         os.chdir(self.megatron_home)
-        process = subprocess.Popen(args, stdout=logfile, stderr=logfile)
+        process = safe_command.run(subprocess.Popen, args, stdout=logfile, stderr=logfile)
         os.chdir(self.cur_dir)
         return {'process': process, 'logfile': logfile}
 
@@ -200,7 +201,7 @@ class Evaluator():
         self._set_megatron_tokenizer(args)
         logfile = open(self.megatron_log_path, 'w')
         os.chdir(self.megatron_home)
-        subprocess.run(args)
+        safe_command.run(subprocess.run, args)
         os.chdir(self.cur_dir)
         logfile.close()
         return {}
